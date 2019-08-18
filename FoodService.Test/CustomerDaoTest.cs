@@ -15,7 +15,7 @@ namespace FoodService.Test
         {
             var customer = new Customer
             {
-                CustomerId = 2,
+                CustomerId = -1,
                 Email = "xd@gmail.com",
                 FirstName = "Lolek",
                 LastName = "Heheszek"
