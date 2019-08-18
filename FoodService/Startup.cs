@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Internal;
+using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -29,8 +31,6 @@ namespace FoodService
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
-
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -50,6 +50,23 @@ namespace FoodService
             app.UseCookiePolicy();
 
             app.UseMvc();
+            //var routes = new RouteBuilder(app);
+
+            //// Add connection to MVC, will be hooked up by calls to MapRoute.
+            //routes.DefaultHandler = new MvcRouteHandler(new ActionInvokerFactory(), );
+
+            //// Execute callback to register routes.
+            //// routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
+
+            //// Create route collection and add the middleware.
+            //app.UseRouter(routes.Build());
+            //app.UseMvc(routes =>
+            //{
+            //    routes.MapRoute("default", "{controller=Home}/{action=Index}");
+            //});
+            //app.UseMvcWithDefaultRoute();
+
+            
         }
     }
 }

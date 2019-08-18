@@ -1,0 +1,7 @@
+DELETE FROM OrderItem;
+DELETE FROM FoodItem;
+DELETE FROM TypeOfFood;
+DELETE FROM [Order];
+DELETE FROM Employee;
+DELETE FROM Payment;
+DELETE FROM Customer;

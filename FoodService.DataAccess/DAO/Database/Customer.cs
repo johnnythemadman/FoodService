@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 
 namespace FoodService.DAO.Database
 {
-    public partial class Customer
+    public partial class Customer 
     {
         public Customer()
         {
@@ -16,5 +17,11 @@ namespace FoodService.DAO.Database
         public string Email { get; set; }
 
         public ICollection<Order> Order { get; set; }
+
+        public static explicit operator Customer(DbSet<Customer> v)
+        {
+            throw new NotImplementedException();
+        }
+
     }
 }
