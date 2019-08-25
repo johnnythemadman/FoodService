@@ -9,10 +9,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.2.0" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\FoodService.DataAccess\FoodService.DataAccess.csproj" />
   </ItemGroup>
 

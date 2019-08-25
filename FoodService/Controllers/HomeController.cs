@@ -19,19 +19,24 @@ namespace FoodService.Controllers
 
         public ActionResult Dashboard()
         {
-            IList<Order> orders = null;
-            using (var context = new FoodServiceContext())
-            {
-                orders = context.Order.ToList();
-            }
-            var model = new DashboardModel { Orders = orders };
-
+            var model = new DashboardModel();
             return View("Dashboard", model);
         }
 
-        public ActionResult CreateOrderItem(OrderItem orderItem)
+        public ActionResult CreateOrder(Order order)
         {
-            return null;
+            return View("CreateOrder");
+        }
+
+        public ActionResult AddNewOrder(Order order)
+        {
+            using (var context = new FoodServiceContext())
+            {
+                context.Order.Add(order);
+                context.SaveChanges();
+
+                return View("Dashboard", new DashboardModel { Orders = context.Order.ToList() });
+            }
         }
     }
 

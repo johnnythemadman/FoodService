@@ -31,7 +31,6 @@ namespace FoodService.DataAccess.Test
                 var result = _dao.SelectById(customer);
                 Assert.IsNotNull(result);
             });
-;
         }
     }
 }

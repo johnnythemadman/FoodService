@@ -5,9 +5,8 @@ using System.Text;
 
 namespace FoodService.Queuing.Interfaces
 {
-    public interface RabbitWrapper
+    public interface IRabbitWrapper
     {
         void AddToQueue(OrderItem orderItem);
-
     }
 }
