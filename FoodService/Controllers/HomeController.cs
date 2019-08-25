@@ -11,7 +11,6 @@ namespace FoodService.Controllers
         [Route("/Home")]
         public ActionResult Index()
         {
-            Console.WriteLine("JEBAC KURWY");
             return View("Index");
         }
     }
