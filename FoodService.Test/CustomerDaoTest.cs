@@ -1,8 +1,10 @@
+using FoodService.DataAccess.DAO.DataAccess;
 using FoodService.DAO.DataAccess;
 using FoodService.DAO.Database;
+using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
-namespace FoodService.Test
+namespace FoodService.DataAccess.Test
 {
     [TestFixture]
     public class CustomerDaoTest
@@ -13,18 +15,23 @@ namespace FoodService.Test
         [Test]
         public void InsertTest()
         {
-            var customer = new Customer
+            var context = new FoodServiceContext();
+            Transaction.WithRollback(context, () =>
             {
-                CustomerId = -1,
-                Email = "xd@gmail.com",
-                FirstName = "Lolek",
-                LastName = "Heheszek"
-            };
+                var customer = new Customer
+                {
+                    Email = "xd@gmail.com",
+                    FirstName = "Lolek",
+                    LastName = "Heheszek"
+                };
 
-            _dao.Insert(customer);
+                context.Customer.Add(customer);
+                context.SaveChanges();
 
-            var result = _dao.SelectById(customer);
-            Assert.IsNotNull(result);
+                var result = _dao.SelectById(customer);
+                Assert.IsNotNull(result);
+            });
+;
         }
     }
 }

@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.421
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodService", "FoodService\FoodService.csproj", "{12E7C2C0-BF4B-42A0-BDD5-BEAE3A0E5F6C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodService.Test", "FoodService.Test\FoodService.Test.csproj", "{7A549629-683B-4B19-8D87-D548E1BE27E8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodService.DataAccess.Test", "FoodService.Test\FoodService.DataAccess.Test.csproj", "{7A549629-683B-4B19-8D87-D548E1BE27E8}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FoodService.DataAccess", "FoodService.DataAccess\FoodService.DataAccess.csproj", "{3B86415F-4836-4612-8B0A-EA4D7D70F57F}"
 EndProject

@@ -31,5 +31,6 @@ namespace FoodService
         {
             return GetSetting("ConnectionString");
         }
+
     }
 }
