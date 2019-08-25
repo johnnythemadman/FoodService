@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <AssemblyName>FoodService.Queuing</AssemblyName>
     <RootNamespace>FoodService.Queuing</RootNamespace>
+    <LangVersion>7.2</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>

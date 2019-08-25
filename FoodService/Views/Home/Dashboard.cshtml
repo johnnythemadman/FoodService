@@ -1,0 +1,33 @@
+﻿@model FoodService.DTO.DashboardModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h2>Dashboard</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Customer</th>
+            <th scope="col">Employee</th>
+            <th scope="col">Payment</th>
+            <th scope="col">Status</th>
+            <th scope="col">Timestamp</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>@order.OrderId</td>
+                <td>@String.Join(", ", order.CustomerIdRefNavigation.FirstName, order.CustomerIdRefNavigation.LastName)</td>
+                <td>@String.Join(", ", order.EmployeeRefNavigation.FirstName, order.EmployeeRefNavigation.LastName)</td>
+                <td>@order.PaymentIdRefNavigation.Code</td>
+                <td>@order.Status</td>
+                <td>@order.Timestamp.ToShortDateString()</td>
+            </tr>
+        }
+    </tbody>
+</table>
