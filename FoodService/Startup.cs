@@ -49,24 +49,22 @@ namespace FoodService
             app.UseStaticFiles();
             app.UseCookiePolicy();
 
-            app.UseMvc();
-            //var routes = new RouteBuilder(app);
+            app.UseMvc(routes =>
+            {
+                routes.MapRoute(
+                    name: "goto_one",
+                    template: "",
+                    defaults: new { controller = "Home", action = "Index" });
 
-            //// Add connection to MVC, will be hooked up by calls to MapRoute.
-            //routes.DefaultHandler = new MvcRouteHandler(new ActionInvokerFactory(), );
+                routes.MapRoute(
+                    name: "goto_two",
+                    template: "two/{id?}",
+                    defaults: new { controller = "Home", action = "PageTwo" });
 
-            //// Execute callback to register routes.
-            //// routes.MapRoute("default", "{controller=Home}/{action=Index}/{id?}");
-
-            //// Create route collection and add the middleware.
-            //app.UseRouter(routes.Build());
-            //app.UseMvc(routes =>
-            //{
-            //    routes.MapRoute("default", "{controller=Home}/{action=Index}");
-            //});
-            //app.UseMvcWithDefaultRoute();
-
-            
+                routes.MapRoute(
+                    name: "default",
+                    template: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

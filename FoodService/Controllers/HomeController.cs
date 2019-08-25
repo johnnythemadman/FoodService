@@ -8,9 +8,11 @@ namespace FoodService.Controllers
 {
     public class HomeController : Controller
     {
-        public IActionResult Index()
+        [Route("/Home")]
+        public ActionResult Index()
         {
-            return View();
+            Console.WriteLine("JEBAC KURWY");
+            return View("Index");
         }
     }
 }
