@@ -48,7 +48,6 @@ namespace FoodService
 
             app.UseStaticFiles();
             app.UseCookiePolicy();
-
             app.UseMvc(routes =>
             {
                 routes.MapRoute(

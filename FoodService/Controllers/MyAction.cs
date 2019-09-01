@@ -9,7 +9,7 @@ namespace FoodService.Controllers
 
         public MyAction(object p)
         {
-                
+
         }
         public void Invoke(Action action)
         {

@@ -1,49 +1,60 @@
-﻿@model FoodService.FoodService.DataAccess.DAO.Database.Order
+﻿@model FoodService.DTO.CreateOrderModel
 
 @{
     ViewData["Title"] = "AddNewOrder";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h2>AddNewOrder</h2>
+<h2>Add new Order to the Queue</h2>
 
-<h4>Order</h4>
+<h4>Provide needed information</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="AddNewOrder">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="CustomerIdRef" class="control-label"></label>
-                <select asp-for="CustomerIdRef" class ="form-control" asp-items="ViewBag.CustomerIdRef"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="EmployeeRef" class="control-label"></label>
-                <select asp-for="EmployeeRef" class ="form-control" asp-items="ViewBag.EmployeeRef"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="PaymentIdRef" class="control-label"></label>
-                <select asp-for="PaymentIdRef" class ="form-control" asp-items="ViewBag.PaymentIdRef"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Timestamp" class="control-label"></label>
-                <input asp-for="Timestamp" class="form-control" />
-                <span asp-validation-for="Timestamp" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label"></label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </form>
+        @using (Html.BeginForm("AddNewOrder", "Home", null, FormMethod.Post))
+        {
+            @Html.TextBoxFor(model => model.CustomerSelected, "", null);
+            <fieldset>
+                <dl>
+                    <dt>
+                        @Html.LabelFor(x => x.CustomerSelected)
+                    </dt>
+                    <dd>
+                        @Html.DropDownListFor(x => x.CustomerSelected, Model.Customers)
+                    </dd>
+                </dl>
+            </fieldset>
+            @Html.TextBoxFor(model => model.EmployeeSeleced, "", null);
+            <fieldset>
+                <dl>
+                    <dt>
+                        @Html.LabelFor(x => x.EmployeeSeleced)
+                    </dt>
+                    <dd>
+                        @Html.DropDownListFor(x => x.EmployeeSeleced, Model.Employees)
+                    </dd>
+                </dl>
+            </fieldset>
+
+            <input type="submit" name="SaveButton" value="Save" />
+
+        }
+
+
+
+
+
+        @*<form asp
+
+
+                -controller="Home" asp-action="AddNewOrder" method="post">
+                <select asp-for="CustomerSelected.Value"
+                        asp-items="Model.Customers">
+                    <option>XD</option>
+                </select>
+
+                <button type="submit">Register</button>
+            </form>*@
     </div>
 </div>
 
