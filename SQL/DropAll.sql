@@ -1,6 +1,5 @@
 DROP TABLE OrderEmployee;
 DROP TABLE OrderCustomer;
-
 DROP TABLE OrderItem;
 DROP TABLE FoodItem;
 DROP TABLE TypeOfFood;

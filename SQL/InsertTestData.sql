@@ -12,7 +12,17 @@ INSERT INTO Customer VALUES
 (
 'Dwight',
 'Shrute',
-'dschrute@dunmiff.com')
+'dschrute@dunmiff.com'),
+(
+'Jaroslaw',
+'Psikuta',
+'jarek@gmail.com'
+),
+(
+'Marek',
+'Browarek',
+'mareczek@harnas.pl'
+)
 
 INSERT INTO Employee VALUES
 (
@@ -22,15 +32,20 @@ INSERT INTO Employee VALUES
 (
 'Big',
 'Smoke',
-'bsnigga@gta.com')
+'bsnigga@gta.com'),
+('Tony',
+'Montana',
+'theboss@scarface.com'),
+('Tomasz',
+'Karolak',
+'tomuszeszparaXD@lol.pl')
 
 INSERT INTO TypeOfFood VALUES
-(
-'Pizza'),
-(
-'Kebab'),
-(
-'Standard dinner')
+('Pizza'),
+('Kebab'),
+('Standard dinner'),
+('Meat burger'),
+('Pancakes')
 
 INSERT INTO Payment VALUES
 (
@@ -67,5 +82,19 @@ INSERT INTO FoodItem VALUES
 (
 3,
 'Schabowy z ziemniaczkami',
-53.00)
+53.00),
+(4,
+'Mega burger XXL',
+37.00),
+(
+5,
+'Pancakes',
+16.20
+),
+(3,
+'Bigos z ziemniakami',
+23.00),
+(3,
+'Fasolka po bretoñsku',
+25.20)
 

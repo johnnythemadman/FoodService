@@ -1,3 +1,6 @@
+DELETE FROM OrderCustomer;
+DELETE FROM OrderEmployee;
+
 DELETE FROM OrderItem;
 DELETE FROM FoodItem;
 DELETE FROM TypeOfFood;
@@ -5,3 +8,14 @@ DELETE FROM [Order];
 DELETE FROM Employee;
 DELETE FROM Payment;
 DELETE FROM Customer;
+
+DBCC CHECKIDENT ('OrderCustomer', RESEED, 0) 
+DBCC CHECKIDENT ('OrderEmployee', RESEED, 0)  
+DBCC CHECKIDENT ('OrderItem', RESEED, 0)  
+DBCC CHECKIDENT ('FoodItem', RESEED, 0)  
+DBCC CHECKIDENT ('TypeOfFood', RESEED, 0)  
+DBCC CHECKIDENT ('[Order]', RESEED, 0)  
+DBCC CHECKIDENT ('Employee', RESEED, 0)  
+DBCC CHECKIDENT ('Payment', RESEED, 0)  
+DBCC CHECKIDENT ('Customer', RESEED, 0)  
+ 
