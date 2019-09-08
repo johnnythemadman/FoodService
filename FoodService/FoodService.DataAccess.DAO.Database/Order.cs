@@ -9,6 +9,7 @@ namespace FoodService.FoodService.DataAccess.DAO.Database
         {
             OrderCustomer = new HashSet<OrderCustomer>();
             OrderEmployee = new HashSet<OrderEmployee>();
+            OrderItem = new HashSet<OrderItem>();
         }
 
         public int OrderId { get; set; }
@@ -24,5 +25,6 @@ namespace FoodService.FoodService.DataAccess.DAO.Database
         public Payment PaymentIdRefNavigation { get; set; }
         public ICollection<OrderCustomer> OrderCustomer { get; set; }
         public ICollection<OrderEmployee> OrderEmployee { get; set; }
+        public ICollection<OrderItem> OrderItem { get; set; }
     }
 }

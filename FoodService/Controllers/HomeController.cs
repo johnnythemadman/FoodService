@@ -49,8 +49,8 @@ namespace FoodService.Controllers
 
             using (var context = new FoodServiceContext())
             {
-                context.Order.Add(newOrder);
-                context.SaveChanges();
+                //context.Order.Add(newOrder);
+                //context.SaveChanges();
 
                 return View("Dashboard", new DashboardModel { Orders = context.Order.ToList() });
             }

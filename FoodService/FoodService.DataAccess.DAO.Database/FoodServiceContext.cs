@@ -85,7 +85,7 @@ namespace FoodService.FoodService.DataAccess.DAO.Database
                     .WithMany(p => p.FoodItem)
                     .HasForeignKey(d => d.TypeOfFoodIdRef)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__FoodItem__TypeOf__71D1E811");
+                    .HasConstraintName("FK__FoodItem__TypeOf__2739D489");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -105,19 +105,19 @@ namespace FoodService.FoodService.DataAccess.DAO.Database
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.CustomerIdRef)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__CustomerI__7E37BEF6");
+                    .HasConstraintName("FK__Order__CustomerI__30C33EC3");
 
                 entity.HasOne(d => d.EmployeeRefNavigation)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.EmployeeRef)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__EmployeeR__7F2BE32F");
+                    .HasConstraintName("FK__Order__EmployeeR__31B762FC");
 
                 entity.HasOne(d => d.PaymentIdRefNavigation)
                     .WithMany(p => p.Order)
                     .HasForeignKey(d => d.PaymentIdRef)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__Order__PaymentId__00200768");
+                    .HasConstraintName("FK__Order__PaymentId__32AB8735");
             });
 
             modelBuilder.Entity<OrderCustomer>(entity =>
@@ -128,13 +128,13 @@ namespace FoodService.FoodService.DataAccess.DAO.Database
                     .WithMany(p => p.OrderCustomer)
                     .HasForeignKey(d => d.CustomerIdRef)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderCust__Custo__03F0984C");
+                    .HasConstraintName("FK__OrderCust__Custo__3A4CA8FD");
 
                 entity.HasOne(d => d.OrderIdRefNavigation)
                     .WithMany(p => p.OrderCustomer)
                     .HasForeignKey(d => d.OrderIdRef)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderCust__Order__02FC7413");
+                    .HasConstraintName("FK__OrderCust__Order__395884C4");
             });
 
             modelBuilder.Entity<OrderEmployee>(entity =>
@@ -145,13 +145,13 @@ namespace FoodService.FoodService.DataAccess.DAO.Database
                     .WithMany(p => p.OrderEmployee)
                     .HasForeignKey(d => d.EmployeeIdRef)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderEmpl__Emplo__07C12930");
+                    .HasConstraintName("FK__OrderEmpl__Emplo__3E1D39E1");
 
                 entity.HasOne(d => d.OrderIdRefNavigation)
                     .WithMany(p => p.OrderEmployee)
                     .HasForeignKey(d => d.OrderIdRef)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderEmpl__Order__06CD04F7");
+                    .HasConstraintName("FK__OrderEmpl__Order__3D2915A8");
             });
 
             modelBuilder.Entity<OrderItem>(entity =>
@@ -160,13 +160,19 @@ namespace FoodService.FoodService.DataAccess.DAO.Database
                     .WithMany(p => p.OrderItem)
                     .HasForeignKey(d => d.FoodItemIdRef)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__OrderItem__FoodI__74AE54BC");
+                    .HasConstraintName("FK__OrderItem__FoodI__3587F3E0");
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrderItem)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__OrderItem__Order__367C1819");
             });
 
             modelBuilder.Entity<Payment>(entity =>
             {
                 entity.HasIndex(e => e.Code)
-                    .HasName("UQ__Payment__A25C5AA7FE094EDC")
+                    .HasName("UQ__Payment__A25C5AA79F5E0EF6")
                     .IsUnique();
 
                 entity.Property(e => e.Code)
