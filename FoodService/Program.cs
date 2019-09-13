@@ -19,9 +19,7 @@ namespace FoodService
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseStartup<Startup>()
-                .UseUrls("http://*:10000")
-        ;
+                .UseStartup<Startup>();
 
 
     }

@@ -50,15 +50,6 @@ namespace FoodService
             app.UseCookiePolicy();
             app.UseMvc(routes =>
             {
-                routes.MapRoute(
-                    name: "goto_one",
-                    template: "",
-                    defaults: new { controller = "Home", action = "Index" });
-
-                routes.MapRoute(
-                    name: "goto_two",
-                    template: "two/{id?}",
-                    defaults: new { controller = "Home", action = "PageTwo" });
 
                 routes.MapRoute(
                     name: "default",

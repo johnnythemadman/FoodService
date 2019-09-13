@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Utility
+namespace FoodService.Utilities
 {
     public static class Transaction
     {

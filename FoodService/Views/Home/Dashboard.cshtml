@@ -7,7 +7,7 @@
 
 <h2>Dashboard</h2>
 
-<table class="table">
+<table class="table" id="OrderTable">
     <thead>
         <tr>
             <th scope="col">#</th>
@@ -16,6 +16,7 @@
             <th scope="col">Payment</th>
             <th scope="col">Status</th>
             <th scope="col">Timestamp</th>
+            <th scope="col">Total price</th>
         </tr>
     </thead>
     <tbody>
@@ -27,7 +28,17 @@
                 <td>@String.Join(", ", order.EmployeeRefNavigation.FirstName, order.EmployeeRefNavigation.LastName)</td>
                 <td>@order.PaymentIdRefNavigation.Code</td>
                 <td>@order.Status</td>
-                <td>@order.Timestamp.ToShortDateString()</td>
+                <td>@order.Timestamp.ToString()</td>
+                @{
+                    var orderItems = Model.OrderItems.Where(x => x.OrderId == order.OrderId);
+                    decimal sum = 0;
+                    foreach (var item in orderItems)
+                    {
+                        var foodItem = Model.FoodItems.FirstOrDefault(x => x.FoodItemId == item.FoodItemIdRef);
+                        sum += item.Quantity * foodItem.UnitPrice;
+                    }
+                }
+                <td>@sum</td>
             </tr>
         }
     </tbody>
@@ -40,48 +51,100 @@
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <form asp-action="AddNewOrder">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            @using (Html.BeginForm("AddNewOrder", "Home", null, FormMethod.Post, false, htmlAttributes: new {@id = "AddNewOrderForm"}))
+            {
                 <div class="form-group">
-                    <label asp-for="CustomerIdRef" class="control-label"></label>
-                    <select asp-for="CustomerIdRef" class="form-control" asp-items="Model."></select>
+                    @Html.LabelFor(x => x.CreateOrderModel.CustomerSelected) <br />
+                    @Html.DropDownListFor(x => x.CreateOrderModel.CustomerSelected, Model.CreateOrderModel.Customers, null, new
+                    {
+                        @class = "form-control"
+                    })
+
                 </div>
                 <div class="form-group">
-                    <label asp-for="EmployeeRef" class="control-label"></label>
-                    <select asp-for="EmployeeRef" class="form-control" asp-items="ViewBag.EmployeeRef"></select>
+                    @Html.LabelFor(x => x.CreateOrderModel.EmployeeSelected)
+                    <br />
+                    @Html.DropDownListFor(x => x.CreateOrderModel.EmployeeSelected, Model.CreateOrderModel.Employees, null, new
+                    {
+                        @class = "form-control"
+                    })
+
                 </div>
                 <div class="form-group">
-                    <label asp-for="PaymentIdRef" class="control-label"></label>
-                    <select asp-for="PaymentIdRef" class="form-control" asp-items="ViewBag.PaymentIdRef"></select>
+                    @Html.LabelFor(x => x.CreateOrderModel.PaymentSelected)
+                    <br />
+                    @Html.DropDownListFor(x => x.CreateOrderModel.PaymentSelected, Model.CreateOrderModel.Payments, null, new
+                    {
+                        @class = "form-control"
+                    })
                 </div>
                 <div class="form-group">
-                    <label asp-for="Timestamp" class="control-label"></label>
-                    <input asp-for="Timestamp" class="form-control" />
-                    <span asp-validation-for="Timestamp" class="text-danger"></span>
+                    @Html.LabelFor(x => x.CreateOrderModel.FoodItemsSelected)
+                    <br />
+                    @Html.ListBoxFor(x => x.CreateOrderModel.FoodItemsSelected, Model.CreateOrderModel.FoodItems, new
+                    {
+                        @class = "form-control"
+                    })
                 </div>
-                <div class="form-group">
-                    <label asp-for="Description" class="control-label"></label>
-                    <input asp-for="Description" class="form-control" />
-                    <span asp-validation-for="Description" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Status" class="control-label"></label>
-                    <input asp-for="Status" class="form-control" />
-                    <span asp-validation-for="Status" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-default" />
-                </div>
-            </form>
+
+                <input type="submit" name="SaveButton" value="Save" id="SaveButton" class="btn btn-primary" />
+
+            }
         </div>
     </div>
 
     <div>
-        <a asp-action="Index">Back to List</a>
+        <button id="TestButton">Click!</button>
     </div>
-
-    @section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }
+    
 
 </div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script type="text/javascript">
+        $(document).ready(function() {
+            @*$("#TestButton").click(function() {
+                alert("click...");
+                $.ajax({
+                    url: '@Url.Action("TestMethod", "Home")',
+                    type: 'POST',
+                    dataType: 'json',
+                    data: {
+                        input: "hello!"
+                    },
+                    success: function(data) {
+                        console.log(data);
+                        alert(data);
+                    }
+                });
+            });*@
+
+            $("#SaveButton").click(function(event) {
+                event.preventDefault();
+                alert("Clicked save button...");
+                var form = document.getElementById("AddNewOrderForm");
+                console.log(form);
+                var formData = new FormData(form);
+                console.log(formData);
+                for (var pair of formData.entries()) {
+                    console.log(pair[0]+ ', ' + pair[1]); 
+                }
+                $.ajax({
+                    url: '@Url.Action("AddNewOrder", "Home")',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data)
+                    {
+                        console.log(data);
+                        alert("SUCCESS!" + data);
+                        if (data.status === "OK") {
+                            $("#OrderTable").append(data.toAppend);
+                        }
+                    }
+                });
+            });
+        })
+    </script>
+}
