@@ -43,7 +43,7 @@
 </table>
 
 <div>
-    <h2>AddNewOrder</h2>
+    <h2>Add new order</h2>
 
     <h4>Order</h4>
     <hr />
@@ -91,42 +91,17 @@
         </div>
     </div>
 
-    <div>
-        <button id="TestButton">Click!</button>
-    </div>
-    
 
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
     <script type="text/javascript">
         $(document).ready(function() {
-            @*$("#TestButton").click(function() {
-                alert("click...");
-                $.ajax({
-                    url: '@Url.Action("TestMethod", "Home")',
-                    type: 'POST',
-                    dataType: 'json',
-                    data: {
-                        input: "hello!"
-                    },
-                    success: function(data) {
-                        console.log(data);
-                        alert(data);
-                    }
-                });
-            });*@
 
             $("#SaveButton").click(function(event) {
                 event.preventDefault();
-                alert("Clicked save button...");
                 var form = document.getElementById("AddNewOrderForm");
-                console.log(form);
                 var formData = new FormData(form);
-                console.log(formData);
-                for (var pair of formData.entries()) {
-                    console.log(pair[0]+ ', ' + pair[1]); 
-                }
                 $.ajax({
                     url: '@Url.Action("AddNewOrder", "Home")',
                     type: 'POST',
@@ -136,7 +111,6 @@
                     success: function (data)
                     {
                         console.log(data);
-                        alert("SUCCESS!" + data);
                         if (data.status === "OK") {
                             $("#OrderTable").append(data.toAppend);
                         }
