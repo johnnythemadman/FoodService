@@ -10,7 +10,6 @@
 <table class="table" id="OrderTable">
     <thead>
         <tr>
-            <th scope="col">#</th>
             <th scope="col">Customer</th>
             <th scope="col">Employee</th>
             <th scope="col">Payment</th>
@@ -23,7 +22,6 @@
         @foreach (var order in Model.Orders)
         {
             <tr>
-                <td>@order.OrderId</td>
                 <td>@String.Join(", ", order.CustomerIdRefNavigation.FirstName, order.CustomerIdRefNavigation.LastName)</td>
                 <td>@String.Join(", ", order.EmployeeRefNavigation.FirstName, order.EmployeeRefNavigation.LastName)</td>
                 <td>@order.PaymentIdRefNavigation.Code</td>

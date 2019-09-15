@@ -8,7 +8,6 @@ namespace FoodService.DTO
     public enum OrderStatusEnum
     {
         Pending,
-        InProgress,
         Complete
     }
 
@@ -22,8 +21,6 @@ namespace FoodService.DTO
             {
                 case OrderStatusEnum.Pending:
                     return "Pending";
-                case OrderStatusEnum.InProgress:
-                    return "In Progress";
                 case OrderStatusEnum.Complete:
                     return "Complete";
                 default:

@@ -1,15 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using CommunicationModel;
+using DatabaseModel;
 using FoodService.DTO;
-using FoodService.FoodService.DataAccess.DAO.Database;
-using FoodService.Utilities;
+using MassTransit;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Internal;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using RabbitMQ.Client;
 
 namespace FoodService.Controllers
 {
@@ -22,7 +25,7 @@ namespace FoodService.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewOrder(CreateOrderModel createOrderModel)
+        public IActionResult AddNewOrder(CreateOrderModel createOrderModel)
         {
             var timestamp = DateTime.UtcNow;
 
@@ -57,63 +60,55 @@ namespace FoodService.Controllers
                                      Order = newOrder
                                  }).ToList();
 
-
-            using (var context = new FoodServiceContext())
+            var publisher = new Publisher.Publisher();
+            try
             {
-                await context.Order.AddAsync(newOrder);
-                await context.OrderCustomer.AddAsync(newOrderCustomer);
-                await context.OrderEmployee.AddAsync(newOrderEmployee);
-                await context.OrderItem.AddRangeAsync(newOrderItems);
+                var newOrderMessage = new NewOrderMessage(newOrder, newOrderCustomer, newOrderEmployee, newOrderItems);
+                publisher.Publish(newOrderMessage);
 
-                await context.SaveChangesAsync();
-                await context.Entry(newOrder).Reference(x => x.EmployeeRefNavigation).LoadAsync();
-                await context.Entry(newOrder).Reference(x => x.CustomerIdRefNavigation).LoadAsync();
-                await context.Entry(newOrder).Reference(x => x.PaymentIdRefNavigation).LoadAsync();
-                try
+                string customerFullName = null;
+                string employeeFullName = null;
+                string paymentCode = null;
+                decimal totalPrice = 0;
+                using (var context = new FoodServiceContext())
                 {
-                    decimal totalPrice = 0;
+                    var customer = context.Customer.FirstOrDefault(x => x.CustomerId == newOrder.CustomerIdRef);
+                    customerFullName = $"{customer.FirstName}, {customer.LastName}";
+
+                    var employee = context.Employee.FirstOrDefault(x => x.EmployeeId == newOrder.EmployeeRef);
+                    employeeFullName = $"{employee.FirstName}, {employee.LastName}";
+
+                    var payment = context.Payment.FirstOrDefault(x => x.PaymentId == newOrder.PaymentIdRef);
+                    paymentCode = payment.Code;
+
                     foreach (var orderItem in newOrderItems)
                     {
-                        await context.Entry(orderItem).Reference(x => x.FoodItemIdRefNavigation).LoadAsync();
-                        totalPrice += orderItem.FoodItemIdRefNavigation.UnitPrice * orderItem.Quantity;
+                        var foodItem = context.FoodItem.FirstOrDefault(x => x.FoodItemId == orderItem.FoodItemIdRef);
+                        totalPrice += foodItem.UnitPrice * orderItem.Quantity;
                     }
 
-                    var toAppend = $"<tr><td>{newOrder.OrderId}</td>" +
-                                   $"<td>{newOrder.CustomerIdRefNavigation.FirstName}, {newOrder.CustomerIdRefNavigation.LastName}</td>" +
-                                   $"<td>{newOrder.EmployeeRefNavigation.FirstName}, {newOrder.EmployeeRefNavigation.LastName}</td>" +
-                                   $"<td>{newOrder.PaymentIdRefNavigation.Code}</td>" +
+                }
+                var toAppend = $"<tr>"+
+                                   $"<td>{customerFullName}</td>" +
+                                   $"<td>{employeeFullName}</td>" +
+                                   $"<td>{paymentCode}</td>" +
                                    $"<td>{newOrder.Status}</td>" +
-                                   $"<td>{newOrder.Timestamp.ToString()}</td>"+
+                                   $"<td>{newOrder.Timestamp.ToString()}</td>" +
                                    $"<td>{totalPrice}</tr>";
-                    return Json(new
-                    {
-                        status = "OK",
-                        toAppend = toAppend
-                    });
-                }
-                catch (Exception e)
+                return Json(new
                 {
-                    return Json(new
-                    {
-                        status = "ERROR"
-                    });
-                }
+                    status = "OK",
+                    toAppend = toAppend
+                });
+            }
+            catch (Exception e)
+            {
+                return Json(new
+                {
+                    status = "ERROR"
+                });
             }
 
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> TestMethod([FromForm]string input)
-        {
-            await Task.Run(() =>
-            {
-                Thread.Sleep(15000);
-            });
-
-            return Json(new
-            {
-                status = input
-            });
         }
 
     }

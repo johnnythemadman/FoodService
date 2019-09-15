@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace FoodService.FoodService.DataAccess.DAO.Database
+namespace DatabaseModel
 {
     public partial class FoodServiceContext : DbContext
     {

@@ -17,4 +17,9 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.1.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\DatabaseModel\DatabaseModel.csproj" />
+    <ProjectReference Include="..\Publisher\Publisher.csproj" />
+  </ItemGroup>
+
 </Project>

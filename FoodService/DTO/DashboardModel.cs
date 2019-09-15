@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FoodService.FoodService.DataAccess.DAO.Database;
+using DatabaseModel;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace FoodService.DTO

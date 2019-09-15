@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace FoodService.FoodService.DataAccess.DAO.Database
+namespace DatabaseModel
 {
     public partial class OrderEmployee
     {
